@@ -1,0 +1,29 @@
+# Docker Compose for CLIProxyAPI hub on TrueNAS (Dockge stack)
+#
+# Copy this file to your Dockge stack directory (e.g., /mnt/tank/apps/cliproxyapi/docker-compose.yml)
+# Then copy .env.dockge to .env in the same directory and customize the values.
+#
+# Deploy with: docker compose up -d
+#
+# Based on: https://gist.github.com/t3dotgg/59a521d2ee8d70aaf90e280c175072af
+
+services:
+  cli-proxy-api:
+    image: eceasy/cli-proxy-api:latest
+    container_name: cli-proxy-api
+    # Pull latest image on startup
+    pull_policy: always
+    # Restart unless explicitly stopped (survives TrueNAS reboots)
+    restart: unless-stopped
+    # Expose port 8317 (CLIProxyAPI API port)
+    ports:
+      - "8317:8317"
+    # Mount config, auth data, logs, and plugins
+    volumes:
+      - ./config.yaml:/CLIProxyAPI/config.yaml:ro
+      - ./auths:/root/.cli-proxy-api
+      - ./logs:/CLIProxyAPI/logs
+      - ./plugins:/CLIProxyAPI/plugins
+    # Environment variables (from .env file)
+    environment:
+      - DEPLOY=truenas-dockge
