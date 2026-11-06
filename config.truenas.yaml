@@ -1,0 +1,37 @@
+# CLIProxyAPI config for TrueNAS Dockge deployment
+# Copy this to /mnt/Main/App_Storage/cliproxyapi/config.yaml
+# and customize access.api-keys and management.secret-key.
+
+config-version: 8
+
+server:
+  host: ""
+  port: 8317
+  max-request-body-bytes: 0
+  response-compression:
+    enabled: true
+    min-bytes: 1024
+  github-token: ""
+  trusted-proxies: []
+  tls:
+    enable: false
+    cert: ""
+    key: ""
+  commercial-mode: false
+  discovery:
+    enabled: false
+  kv-store:
+    disabled: false
+    path: ""
+
+management:
+  allow-remote: true
+  secret-key: "change-me-to-a-strong-management-key"
+  disable-control-panel: false
+  base-url: "http://127.0.0.1:8317"
+
+access:
+  api-keys:
+    - "your-access-key-1"
+    - "your-access-key-2"
+    - "your-access-key-3"
